@@ -18,34 +18,23 @@ class BasePage():
 
     def enter_word_tensor(self):
         # вводим в поле поиска слово "Тензор":
-        # word = "Тензор"
-        word = "Роботы-игрушки"
+        word = "Тензор"
         btn = self.browser.find_element(*BasePageLocators.INPUT_BOX)
         btn.send_keys(word)
         # Проверка, что есть таблица с подсказками (suggest):
         # assert self.is_element_present(
         #     *BasePageLocators.INPUT_BOX_SUGGEST_LIST), "INPUT BOX SUGGEST LIST IS NOT PRESENTED..."
         time.sleep(2)
-        btn.send_keys(Keys.ENTER) # нажимаем клавишу Enter
-        time.sleep(2)
+        btn.send_keys(Keys.ENTER)  # нажимаем клавишу Enter
 
-
-
-
-
-    # def should_be_table_suggest(self):
-    #     """ Проверка, что есть таблица с подсказками (suggest). """
-    #     assert self.is_element_present(*BasePageLocators.INPUT_BOX_SUGGEST_LIST), "INPUT BOX SUGGEST LIST IS NOT PRESENTED..."
-
-
-
-    # def should_be_link_tensor():
-
-
-
-
-
-
+    def should_be_link_tensor(self):
+        # проверяем, что в первых 5 результатах есть ссылка на tensor.ru:
+        assert self.is_element_present(*BasePageLocators.DATA_CID_1) \
+               or self.is_element_present(*BasePageLocators.DATA_CID_2) \
+               or self.is_element_present(*BasePageLocators.DATA_CID_3) \
+               or self.is_element_present(*BasePageLocators.DATA_CID_4) \
+               or self.is_element_present(*BasePageLocators.DATA_CID_5), \
+            "RESULTS OF SEARCH LINK 'https://tensor.ru' IS NOT PRESENTED..."
 
     def is_element_present(self, how, what):
         """
@@ -86,46 +75,3 @@ class BasePage():
     def open(self):
         """ Открытие браузера """
         self.browser.get(self.url)
-
-
-
-
-
-    def go_to_login_mail_page(self):
-        """ Логинимся в почте: заполняем поля входа. """
-        btn = self.browser.find_element(*LoginPageLocators.BUTTON2_ENTER)
-        btn.click()
-        # вводим имя Simbirsoft2022:
-        btn = self.browser.find_element(*LoginPageLocators.INPUT_REGISTRATION_EMAIL)
-        btn.send_keys(email)
-        # жмем Войти:
-        btn = self.browser.find_element(*LoginPageLocators.BUTTON_INPUT_EMAIL)
-        btn.click()
-        # вводим пароль, нужна пауза, чтобы успеть ввести пароль:
-        time.sleep(1)
-        btn = self.browser.find_element(*LoginPageLocators.INPUT_PASSWORD1)
-        btn.send_keys(password)
-        # жмем Войти:
-        btn = self.browser.find_element(*LoginPageLocators.BUTTON_INPUT_EMAIL)
-        btn.click()
-
-    def find_count_mail_and_write_mail(self):
-        # нужна пауза чтобы подгрузилась страница и подсчитались письма:
-        time.sleep(6)
-        # ищем список элементов по теме письма (локатор TITLE):
-        a = self.browser.find_elements(*MailPageLocators.TITLE)
-        count = len(a)
-        btn = self.browser.find_element(*MailPageLocators.BUTTON_WRITE_MAIL)
-        btn.click()
-        time.sleep(3)
-        btn = self.browser.find_element(*MailPageLocators.FIELD_ADDRESS)
-        btn.send_keys(full_email)
-        btn = self.browser.find_element(*MailPageLocators.FIELD_SUBJECT_TEXT)
-        btn.send_keys("Simbirsoft Тестовое задание. Шафиков")
-        time.sleep(2)
-        btn = self.browser.find_element(*MailPageLocators.FIELD_TEXTBOX_CONTENT_EMAIL)
-        btn.send_keys(f"Количество найденных писем: ", count)
-        time.sleep(3)
-        btn = self.browser.find_element(*MailPageLocators.BUTTON_SEND_MAIL)
-        btn.click()
-        time.sleep(3)
