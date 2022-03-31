@@ -24,9 +24,6 @@ class BasePage():
         word = "Тензор"
         btn = self.browser.find_element(*BasePageLocators.INPUT_BOX)
         btn.send_keys(word)
-        # Проверка, что есть таблица с подсказками (suggest):
-        # assert self.is_element_present(
-        #     *BasePageLocators.INPUT_BOX_SUGGEST_LIST), "INPUT BOX SUGGEST LIST IS NOT PRESENTED..."
         time.sleep(2)
         btn.send_keys(Keys.ENTER)  # нажимаем клавишу Enter
 
